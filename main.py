@@ -1,18 +1,19 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
-def index():
-    return 'Hello World!'
 
-@app.route('/about')
-def about():
-    return 'About!'
+@app.route('/greetings/<name>', methods=['GET', 'POST'])
+def greetings(name):
+    if request.method == 'GET':
+        # create the response
+        response = {'message': f'Hello {name.capitalize()}'}
+        # return the response as JSON
+        return jsonify(response)
 
-@app.route('/contact')
-def contact():
-    return 'Contact!'
+    elif request.method == 'POST':
+        return jsonify({'message': 'Hello World'})
+
 
 if __name__ == '__main__':
     app.run(debug=True)
